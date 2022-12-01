@@ -1,5 +1,5 @@
-const connectToMongo = require("./connectToMongo")
-const express = require('express')
+import connectToMongo from "./connectToMongo.js";
+import express from "express";
 
 connectToMongo();
 

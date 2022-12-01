@@ -1,4 +1,5 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const mongoURI = 'mongodb://localhost:27017';
 
@@ -7,5 +8,5 @@ const connectToMongo = async() => {
     console.log("Connected to Mongo Successfully!")
 }
 
-module.exports = connectToMongo;
+export default connectToMongo;
 
