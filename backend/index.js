@@ -9,7 +9,7 @@ import notesRoute from "./routes/notes.js"
 connectToMongo();
 
 const app = express();
-const port = 3000;
+const port = 5000;
 
 //Middleware
 app.use(express.json());
