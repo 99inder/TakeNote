@@ -1,10 +1,11 @@
 import express from "express";
+import User from "../models/User.js"
 
 const router = express.Router();
 
-router.get('/', (req,res) => {
-    res.send("<h1>This is Auth Route</h1>");
-    console.log(req.body);
+router.post('/', (req, res) => {
+    const user = User(req.body);
+    user.save()
 })
 
 export default router;
