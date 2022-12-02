@@ -1,6 +1,7 @@
 import express from "express";                                  //express import to create an express app
 import { body, validationResult } from 'express-validator';     //import for express validator
 import User from "../models/User.js";                           //import for 'user' model that we created
+import bcrypt from 'bcryptjs';
 
 const router = express.Router();
 
@@ -19,18 +20,22 @@ router.post('/create-user', [
     }
 
     try {
-        
+
         //Checking if the user with same email already exists
         let user = await User.findOne({ email: req.body.email });
         if (user) {
             return res.status(400).json({ error: "user with this email aready exists!" })
         }
 
+        //password encryption using bCrypt
+        let securePass = await bcrypt.hash(req.body.password, 10);
+
         //Save the data to database after validating that there are no errors
         user = await User.create({
             name: req.body.name,
             email: req.body.email,
-            password: req.body.password,
+            password: securePass,
+            // password: req.body.password,
         });
         res.json(user);
 
