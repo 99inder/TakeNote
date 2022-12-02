@@ -1,7 +1,7 @@
 // const mongoose = require("mongoose");
 import mongoose from "mongoose";
 
-const mongoURI = 'mongodb://localhost:27017';
+const mongoURI = 'mongodb://localhost:27017/notes-app';
 
 const connectToMongo = async() => {
     await mongoose.connect(mongoURI);
@@ -9,4 +9,3 @@ const connectToMongo = async() => {
 }
 
 export default connectToMongo;
-
