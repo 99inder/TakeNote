@@ -105,11 +105,11 @@ router.post('/login', [
 
         //authentication token generation and sending it to the user
         const authToken = jwt.sign(payload, jwtKey);
-        res.json({ authToken });
+        return res.json({ authToken });
 
     } catch (error) {
         console.log(error.message);
-        res.status(500).send("Internal Server Error");
+        return res.status(500).send("Internal Server Error");
     }
 })
 
