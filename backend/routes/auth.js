@@ -3,12 +3,13 @@ import { body, validationResult } from 'express-validator';     //import for exp
 import User from "../models/User.js";                           //import for 'user' model that we created
 import bcrypt from 'bcryptjs';                                  //import for password encryption
 import jwt from 'jsonwebtoken';                                 //import for json-web-token
+import fetchuser from "../middleware/fetchuser.js";             //middleware function that extracts the user id from the auth-token
 
 const router = express.Router();
 
 const jwtKey = "mynameisInder";
 
-//ENDPOINT: "/api/auth/create-user"
+//ENDPOINT 1: "/api/auth/create-user"     Creating a user and saving it's data to the database
 router.post('/create-user', [
 
     body('name', 'The length of the name must be atleast 3.').isLength({ min: 3 }),
@@ -49,7 +50,7 @@ router.post('/create-user', [
         }
         console.log(payload);
 
-        //authentication token generation
+        //authentication token generation and sending to the user
         const authToken = jwt.sign(payload, jwtKey);
         res.json({ authToken });
 
@@ -61,7 +62,7 @@ router.post('/create-user', [
 })
 
 
-//ENDPOINT: "/api/auth/login"   
+//ENDPOINT 2: "/api/auth/login"   Authenticating the user and sending the auth token
 //(Using POST request as we are dealing with passwords here and GET request makes all these details visible in the URL which could be DANGEROUS!)
 router.post('/login', [
     body('email', 'Please enter a valid email address.').isEmail(),
@@ -102,13 +103,30 @@ router.post('/login', [
         }
         console.log(payload);
 
-        //authentication token generation
+        //authentication token generation and sending it to the user
         const authToken = jwt.sign(payload, jwtKey);
         res.json({ authToken });
 
     } catch (error) {
         console.log(error.message);
         res.status(500).send("Internal Server Error");
+    }
+})
+
+
+//ENDPOINT 3: "/api/auth/getuser"   Getting the user details from the database by extracting the userid from the auth-token
+//(Using POST request as we are dealing with passwords here and GET request makes all these details visible in the URL which could be DANGEROUS!)
+router.post('/getuser', fetchuser, async (req, res) => {
+
+
+    try {
+        const userId = req.user.id;
+        const user = await User.findById(userId).select(["-password", "-date"]);
+        return res.status(200).json(user);
+
+    } catch (error) {
+        console.log(error.message);
+        return res.status(500).send("Internal Server Error");
     }
 })
 

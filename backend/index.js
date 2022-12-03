@@ -11,7 +11,7 @@ connectToMongo();
 const app = express();
 const port = 5000;
 
-//Middleware
+//Middleware to use (req,res) in json
 app.use(express.json());
 
 //Available Routes
