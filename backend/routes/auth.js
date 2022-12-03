@@ -9,7 +9,7 @@ const router = express.Router();
 
 const jwtKey = "mynameisInder";
 
-//ENDPOINT 1: "/api/auth/create-user"     Creating a user and saving it's data to the database
+//ENDPOINT 1: POST: "/api/auth/create-user" (LOGIN NOT REQUIRED)    Creating a user and saving it's data to the database
 router.post('/create-user', [
 
     body('name', 'The length of the name must be atleast 3.').isLength({ min: 3 }),
@@ -62,7 +62,7 @@ router.post('/create-user', [
 })
 
 
-//ENDPOINT 2: "/api/auth/login"   Authenticating the user and sending the auth token
+//ENDPOINT 2: POST: "/api/auth/login"   Authenticating the user and sending the auth token
 //(Using POST request as we are dealing with passwords here and GET request makes all these details visible in the URL which could be DANGEROUS!)
 router.post('/login', [
     body('email', 'Please enter a valid email address.').isEmail(),
@@ -95,7 +95,7 @@ router.post('/login', [
         }
 
         //Continue if password matches
-        //payload for auth token generation to recognizes/verify user 
+        //payload for auth token generation to recognize/verify user 
         const payload = {
             user: {
                 id: user.id
@@ -114,7 +114,7 @@ router.post('/login', [
 })
 
 
-//ENDPOINT 3: "/api/auth/getuser"   Getting the user details from the database by extracting the userid from the auth-token
+//ENDPOINT 3: POST: "/api/auth/getuser"  (LOGIN REQUIRED)  Getting the user details from the database by extracting the userid from the auth-token
 //(Using POST request as we are dealing with passwords here and GET request makes all these details visible in the URL which could be DANGEROUS!)
 router.post('/getuser', fetchuser, async (req, res) => {
 
@@ -122,7 +122,7 @@ router.post('/getuser', fetchuser, async (req, res) => {
     try {
         const userId = req.user.id;
         const user = await User.findById(userId).select(["-password", "-date"]);
-        return res.status(200).json(user);
+        return res.send(user);
 
     } catch (error) {
         console.log(error.message);
