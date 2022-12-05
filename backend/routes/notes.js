@@ -30,10 +30,10 @@ router.post('/addnote', fetchuser, [
             user: req.user.id       //contains the user id of the user retrieved from the from the middleware of the user
         })
 
-        res.send(note);
+        return res.send(note);
     } catch (error) {
         console.log(error.message);
-        res.status(500).send("Internal Server Error");
+        return res.status(500).send("Internal Server Error");
     }
 });
 
@@ -43,9 +43,10 @@ router.get('/fetchallnotes', fetchuser, async (req, res) => {
     try {
         let notes = await Note.find({ user: req.user.id });
         notes.length ? res.json(notes) : res.status(404).send("No Notes found from this user");
+        return;
     } catch (error) {
         console.log(error.message);
-        res.status(500).send("Internal Server Error");
+        return res.status(500).send("Internal Server Error");
     }
 });
 
@@ -79,7 +80,7 @@ router.put('/updatenote/:id', fetchuser, async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
-        res.status(500).send("Internal Server Error");
+        return res.status(500).send("Internal Server Error");
     }
 });
 
@@ -107,7 +108,7 @@ router.delete('/deletenote/:id', fetchuser, async (req, res) => {
 
     } catch (error) {
         console.log(error.message);
-        res.status(500).send("Internal Server Error");
+        return res.status(500).send("Internal Server Error");
     }
 });
 
