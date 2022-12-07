@@ -1,6 +1,6 @@
-export const getNotes = () => {
+export const fetchNotes = () => {
     return {
-        type : "getNotes"
+        type : "fetchNotes"
     }
 }
 
