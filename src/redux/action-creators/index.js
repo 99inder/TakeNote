@@ -4,9 +4,23 @@ export const getNotes = () => {
     }
 }
 
-export const setNotes = (data) => {
+export const addNote = (data) => {
     return {
-        type : "setNotes",
+        type : "addNote",
+        payload : data
+    }
+}
+
+export const deleteNote = (data) => {
+    return {
+        type : "deleteNote",
+        payload : data
+    }
+}
+
+export const editNote = (data) => {
+    return {
+        type : "editNote",
         payload : data
     }
 }

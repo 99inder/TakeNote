@@ -68,7 +68,21 @@ const notesReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case 'getNotes': return state;
-        case 'setNotes': return state = action.payload;
+        
+        case 'addNote': {
+            const note = {
+                "_id": "638db8b23ee64dg81b84",
+                "user": "638a522935a444fb67702dfc",
+                "title": action.payload.title,
+                "description": action.payload.description,
+                "tag": action.payload.tag,
+                "date": "2022-12-05T09:24:02.954Z",
+                "__v": 0
+            };
+            return state = state.concat(note)
+        };
+        case 'deleteNote': return state = action.payload;
+        case 'editNote': return state = action.payload;
         default: return state;
     }
 }
