@@ -68,8 +68,9 @@ const notesReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case 'getNotes': return state;
-        
+
         case 'addNote': {
+            //TODO: API CALL
             const note = {
                 "_id": "638db8b23ee64dg81b84",
                 "user": "638a522935a444fb67702dfc",
@@ -81,8 +82,15 @@ const notesReducer = (state = initialState, action) => {
             };
             return state = state.concat(note)
         };
-        case 'deleteNote': return state = action.payload;
-        case 'editNote': return state = action.payload;
+
+        case 'deleteNote': {
+            //TODO: API CALL
+            const newNoteState = state.filter((note) => { return note._id !== action.payload.id; });
+            state = newNoteState;
+            return state;
+        };
+
+        case 'editNote': return state;
         default: return state;
     }
 }
