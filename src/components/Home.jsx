@@ -4,7 +4,7 @@ import { Notes } from './';
 const Home = () => {
   return (
     <>
-      <h1>This is Homepage</h1>
+      <h5>This is Homepage</h5>
       <div className="flex flex-col items-center gap-8">
         <Notes />
       </ div>

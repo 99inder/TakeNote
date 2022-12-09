@@ -7,7 +7,7 @@ const App = () => {
   return (
     <>
       <Navbar />
-      <div className="main-container">
+      <div className="container">
       <Alert message={"Here is the message Prop."}/>
         <Routes>
           <Route exact path='/*' element={<Home />} />

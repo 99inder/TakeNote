@@ -11,6 +11,7 @@ const Notes = () => {
 
     useEffect(() => {
         fetchNotes();
+        // eslint-disable-next-line
     }, [])
 
     const notesState = useSelector((state) => state.notesReducer);
@@ -18,7 +19,7 @@ const Notes = () => {
     return (
         <>
             <AddNote />
-            <div className='grid grid-cols-3 gap-8 grid-center'>
+            <div class="row">
                 {
                     notesState.map((note) => {
                         return <NoteItem key={note._id} note={note} />
