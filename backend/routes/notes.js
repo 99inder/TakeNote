@@ -76,7 +76,7 @@ router.put('/updatenote/:id', fetchuser, async (req, res) => {
         //Finally update the note
         await Note.findByIdAndUpdate(req.params.id, newnote);
 
-        return res.send("Note Updated");
+        return res.json("Note Updated");
 
     } catch (error) {
         console.log(error.message);

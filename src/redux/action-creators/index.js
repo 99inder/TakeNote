@@ -22,9 +22,9 @@ const noteDeleted = (data) => {
     }
 }
 
-export const editNote = (data) => {
+const noteUpdated = (data) => {
     return {
-        type: "editNote",
+        type: "noteUpdated",
         payload: data
     }
 }
@@ -75,5 +75,21 @@ export const deleteNote = (data) => {
             }
         });
         dispatch(noteDeleted(data));
+    }
+}
+
+//Async action-creator to 'UPDATE A NOTE' via API call
+export const updateNote = (data) => {
+    return async (dispatch) => {
+        const { _id, title, description, tag } = data;     //destructuring payload for easy assignments
+        await fetch(`${host}/api/notes/updatenote/${_id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'authToken': authToken,
+            },
+            body: JSON.stringify({ title, description, tag }) // body data type must match "Content-Type" header
+        });
+        dispatch(noteUpdated(data));
     }
 }
