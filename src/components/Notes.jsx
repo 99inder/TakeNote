@@ -37,7 +37,7 @@ const Notes = () => {
     return (
         <>
             {/* < !--Button trigger modal-- > */}
-            <button type="button" className="btn btn-primary" ref={ref} data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button type="button" className="btn btn-primary d-none" ref={ref} data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 Launch static backdrop modal
             </button>
 
@@ -53,11 +53,11 @@ const Notes = () => {
                             <div className='my-3'>
                                 <div className="mb-3">
                                     <label htmlFor="title" className="form-label">*Title</label>
-                                    <input type="text" className="form-control" id="title" name='title' value={note.title} onChange={onChange} required />
+                                    <input type="text" className="form-control" id="title" name='title' minLength={3} value={note.title} onChange={onChange} required />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="description" className="form-label">*Description</label>
-                                    <textarea className="form-control" id="description" name='description' value={note.description} rows="3" onChange={onChange} required ></textarea>
+                                    <textarea className="form-control" id="description" name='description' minLength={5} value={note.description} rows="3" onChange={onChange} required ></textarea>
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="tag" className="form-label">Tag</label>
@@ -67,7 +67,7 @@ const Notes = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" className="btn btn-primary" onClick={handleClick}>Update Note</button>
+                            <button type="button" className="btn btn-primary" disabled={note.title.length < 3 || note.description.length < 5} onClick={handleClick}>Update Note</button>
                         </div>
                     </div>
                 </div>
@@ -75,6 +75,9 @@ const Notes = () => {
 
             <AddNote />
             <div className="row">
+                <div className="container">
+                    {notesState.length === 0 && "No Note to display."}
+                </div>
                 {
                     notesState.map((note) => {
                         return <NoteItem key={note._id} note={note} editNote={editNote} />

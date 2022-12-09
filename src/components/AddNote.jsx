@@ -15,22 +15,23 @@ const AddNote = () => {
     const handleClick = (e) => {
         e.preventDefault();
         addNote(note);
+        setnote({ title: "", description: "", tag: "" });
     }
     return (
         <div className='my-3'>
             <div className="mb-3">
                 <label htmlFor="title" className="form-label">*Title</label>
-                <input type="text" className="form-control" id="title" name='title' onChange={onChange} required />
+                <input type="text" className="form-control" id="title" name='title' value={note.title} minLength={3} onChange={onChange} required />
             </div>
             <div className="mb-3">
                 <label htmlFor="description" className="form-label">*Description</label>
-                <textarea className="form-control" id="description" name='description' rows="3" onChange={onChange} required ></textarea>
+                <textarea className="form-control" id="description" name='description' value={note.description} rows="3" minLength={5} onChange={onChange} required ></textarea>
             </div>
             <div className="mb-3">
                 <label htmlFor="tag" className="form-label">Tag</label>
-                <input type="text" className="form-control" id="tag" name='tag' onChange={onChange} />
+                <input type="text" className="form-control" id="tag" name='tag' value={note.tag} onChange={onChange} />
             </div>
-            <button type="button" className="btn btn-primary" onClick={handleClick}>Add Note</button>
+            <button type="button" className="btn btn-primary" disabled={note.title.length < 3 || note.description.length < 5} onClick={handleClick}>Add Note</button>
         </div>
     )
 }
