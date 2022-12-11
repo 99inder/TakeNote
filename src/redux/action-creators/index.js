@@ -29,6 +29,19 @@ const noteUpdated = (data) => {
     }
 }
 
+const loggedIn = (data) => {
+    return {
+        type: "login",
+        payload: data
+    }
+}
+
+export const logout = () => {
+    return {
+        type: 'logout'
+    }
+}
+
 //Async action-creator to "FETCH ALL NOTES" from API
 export const fetchNotes = () => {
     return async (dispatch) => {
@@ -91,5 +104,36 @@ export const updateNote = (data) => {
             body: JSON.stringify({ title, description, tag }) // body data type must match "Content-Type" header
         });
         dispatch(noteUpdated(data));
+    }
+}
+
+//Async action-creator for login page that returns the user authentication token on login sucess
+export const login = (data) => {
+    return async (dispatch) => {
+        const { email, password } = data;
+        const response = await fetch(`${host}/api/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ email, password })
+        });
+        const { authToken } = await response.json();
+        dispatch(loggedIn(authToken));
+    }
+}
+
+//Async action-creator for singup page that returns the user authentication token on successful signup
+export const signup = (data) => {
+    return async (dispatch) => {
+        const response = await fetch(`${host}/api/auth/create-user`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)//to update
+        });
+        const {authToken} = await response.json();
+        dispatch(loggedIn(authToken));
     }
 }

@@ -1,21 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { actionCreators } from '../redux';
 
 const Login = () => {
+
+    const dispatch = useDispatch();
+    const { login } = bindActionCreators(actionCreators, dispatch);
+
+    const [credentials, setcredentials] = useState({ email: "", password: "" });
+
+    const onChange = (e) => {
+        setcredentials({ ...credentials, [e.target.name]: e.target.value });
+    }
+
+    const handleClick = (e) => {
+        e.preventDefault();
+        login(credentials);
+    }
     return (
 
-        <form>
+        <form onSubmit={handleClick}>
             <div className="mb-3">
-                <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                <input type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
-                    <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
+                <label htmlFor="email" className="form-label">Email address</label>
+                <input type="email" name="email" value={credentials.email} onChange={onChange} className="form-control" id="email" aria-describedby="emailHelp" autoComplete='email' />
+                <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
             </div>
             <div className="mb-3">
-                <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                <input type="password" className="form-control" id="exampleInputPassword1" />
-            </div>
-            <div className="mb-3 form-check">
-                <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                    <label className="form-check-label" htmlFor="exampleCheck1">Check me out</label>
+                <label htmlFor="password" className="form-label">Password</label>
+                <input type="password" name="password" value={credentials.password} onChange={onChange} className="form-control" id="password" autoComplete='off' />
             </div>
             <button type="submit" className="btn btn-primary">Submit</button>
         </form>
