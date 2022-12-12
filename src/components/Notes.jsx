@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../redux/index.js';
 import { NoteItem, AddNote } from './index.js';
@@ -9,12 +10,20 @@ const Notes = () => {
     const dispatch = useDispatch();
     const { fetchNotes, updateNote } = bindActionCreators(actionCreators, dispatch);
 
+    const notesState = useSelector((state) => state.notesReducer);
+    const userState = useSelector((state) => state.userReducer);
+
+    const navigate = useNavigate();
+
     useEffect(() => {
-        fetchNotes();
+        const user = localStorage.getItem('authToken');
+
+        if (!user) {
+            navigate('/login');
+        }
+        fetchNotes(userState.authToken);
         // eslint-disable-next-line
     }, [])
-
-    const notesState = useSelector((state) => state.notesReducer);
 
     //For Update Note
     const [note, setnote] = useState({ title: "", description: "", tag: "" });
@@ -25,7 +34,7 @@ const Notes = () => {
     }
     const handleClick = (e) => {
         e.preventDefault();
-        updateNote(note);
+        updateNote(note, userState.authToken);
         ref.current.click();
     }
     const editNote = (currentNote) => {

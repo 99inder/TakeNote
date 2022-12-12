@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../redux';
 
 const AddNote = () => {
+    const { authToken } = useSelector(state => state.userReducer);
+
     const dispatch = useDispatch();
     const { addNote } = bindActionCreators(actionCreators, dispatch);
     const [note, setnote] = useState({ title: "", description: "", tag: "" });
@@ -14,7 +16,7 @@ const AddNote = () => {
 
     const handleClick = (e) => {
         e.preventDefault();
-        addNote(note);
+        addNote(note, authToken);
         setnote({ title: "", description: "", tag: "" });
     }
     return (

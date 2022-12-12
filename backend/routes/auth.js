@@ -29,7 +29,7 @@ router.post('/create-user', [
         //Checking if the user with same email already exists
         let user = await User.findOne({ email: req.body.email });
         if (user) {
-            return res.status(400).json({ error: "user with this email aready exists!" })
+            return res.status(400).json({ success: false, error: "user with this email aready exists!" })
         }
 
         //password encryption using bCrypt
@@ -52,7 +52,7 @@ router.post('/create-user', [
 
         //authentication token generation and sending to the user
         const authToken = jwt.sign(payload, jwtKey);
-        return res.json({ authToken });
+        return res.json({ success: true, authToken });
 
     } catch (error) {
         console.log(error.message);
@@ -82,7 +82,7 @@ router.post('/login', [
         console.log(user);
 
         if (!user) {
-            return res.status(400).json({ error: "Please try to login with correct credentials." });
+            return res.status(400).json({ success: false, error: "Please try to login with correct credentials." });
         }
 
         //Compare the input login password with the password hash sotored in the database
@@ -91,7 +91,7 @@ router.post('/login', [
 
         //If password doesn't match, return error response
         if (!passwordCompare) {
-            return res.status(400).json({ error: "Please try to login with correct credentials." });
+            return res.status(400).json({ success: false, error: "Please try to login with correct credentials." });
         }
 
         //Continue if password matches
@@ -105,7 +105,7 @@ router.post('/login', [
 
         //authentication token generation and sending it to the user
         const authToken = jwt.sign(payload, jwtKey);
-        return res.json({ authToken });
+        return res.json({ success: true, authToken });
 
     } catch (error) {
         console.log(error.message);

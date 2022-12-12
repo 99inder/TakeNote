@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../redux';
 
 const Login = () => {
+    const host = "http://localhost:5000";   //Hard Coding just for now
+    const navigate = useNavigate();     //for the purpose of redirecting to another page
 
+    //to get setUser action-creator to set user state in redux store
     const dispatch = useDispatch();
-    const { login } = bindActionCreators(actionCreators, dispatch);
+    const { setUser } = bindActionCreators(actionCreators, dispatch);
 
     const [credentials, setcredentials] = useState({ email: "", password: "" });
 
@@ -14,10 +18,28 @@ const Login = () => {
         setcredentials({ ...credentials, [e.target.name]: e.target.value });
     }
 
-    const handleClick = (e) => {
+    const handleClick = async (e) => {
         e.preventDefault();
-        login(credentials);
+        const response = await fetch(`${host}/api/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(credentials)
+        });
+        const res = await response.json();
+
+        if (res.success) {
+            const { authToken } = res;
+            setUser({ authToken });
+            localStorage.setItem('authToken', res.authToken);
+            navigate("/");
+        }
+        else {
+            alert("Invalid Credentials!");
+        }
     }
+
     return (
 
         <form onSubmit={handleClick}>
