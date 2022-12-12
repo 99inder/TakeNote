@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../redux';
 
-const AddNote = () => {
+const AddNote = (props) => {
     const { authToken } = useSelector(state => state.userReducer);
 
     const dispatch = useDispatch();
@@ -17,6 +17,7 @@ const AddNote = () => {
     const handleClick = (e) => {
         e.preventDefault();
         addNote(note, authToken);
+        props.showAlert("Note Added Successfully!", "success");
         setnote({ title: "", description: "", tag: "" });
     }
     return (

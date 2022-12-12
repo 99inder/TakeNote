@@ -10,6 +10,10 @@ const NoteItem = (props) => {
 
     const dispatch = useDispatch();
     const { deleteNote } = bindActionCreators(actionCreators, dispatch);
+    const del = () => {
+        deleteNote(note._id, authToken);
+        props.showAlert("Note Deleted Successfully!", "success");
+    }
     return (
         <div className="col-sm-6 my-3">
             <div className="card">
@@ -17,7 +21,7 @@ const NoteItem = (props) => {
                     <h5 className="card-title">{note.title}</h5>
                     <p className="card-text">{note.description}</p>
                     <div className="d-flex">
-                        <button className="btn btn-danger mx-2" onClick={() => deleteNote(note._id, authToken)}><i className="fa-regular fa-trash-can"></i>Delete</button>
+                        <button className="btn btn-danger mx-2" onClick={del}><i className="fa-regular fa-trash-can"></i>Delete</button>
                         <button className="btn btn-primary mx-2" onClick={() => editNote(note)}><i className="fa-solid fa-pen-to-square"></i>Edit</button>
                     </div>
                 </div>

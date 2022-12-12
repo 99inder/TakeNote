@@ -4,9 +4,9 @@ import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../redux';
 
-const Signup = () => {
+const Signup = (props) => {
     const host = "http://localhost:5000";   //Hard Coding just for now
-    
+
     const navigate = useNavigate();     //for the purpose of redirecting to another page
 
     //to get setUser action-creator to set user state in redux store
@@ -34,9 +34,10 @@ const Signup = () => {
             setUser({ authToken });
             localStorage.setItem('authToken', res.authToken);
             navigate("/");
+            props.showAlert("Account created Successfully!", "success");
         }
         else {
-            alert("User with this email already exists!");
+            props.showAlert("User with this email already exists! Try Logging-in instead!", "danger");
         }
     }
 

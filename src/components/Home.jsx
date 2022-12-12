@@ -1,11 +1,11 @@
 import React from 'react'
 import { Notes } from './';
 
-const Home = () => {
+const Home = (props) => {
   return (
     <>
       <div className="flex flex-col items-center gap-8">
-        <Notes />
+        <Notes showAlert={props.showAlert} />
       </ div>
     </>
   )

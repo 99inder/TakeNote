@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../redux/index.js';
 import { NoteItem, AddNote } from './index.js';
 
-const Notes = () => {
+const Notes = (props) => {
 
     const dispatch = useDispatch();
     const { fetchNotes, updateNote } = bindActionCreators(actionCreators, dispatch);
@@ -32,10 +32,13 @@ const Notes = () => {
     const onChange = (e) => {
         setnote({ ...note, [e.target.name]: e.target.value });
     }
+
+    //Update Note click handler function
     const handleClick = (e) => {
         e.preventDefault();
         updateNote(note, userState.authToken);
         ref.current.click();
+        props.showAlert("Note Updated Successfully!", "success");
     }
     const editNote = (currentNote) => {
         ref.current.click();
@@ -82,14 +85,14 @@ const Notes = () => {
                 </div>
             </div>
 
-            <AddNote />
+            <AddNote showAlert={props.showAlert} />
             <div className="row">
                 <div className="container">
                     {notesState.length === 0 && "No Note to display."}
                 </div>
                 {
                     notesState.map((note) => {
-                        return <NoteItem key={note._id} note={note} editNote={editNote} />
+                        return <NoteItem key={note._id} note={note} editNote={editNote} showAlert={props.showAlert} />
                     })
                 }
             </div>

@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { actionCreators } from '../redux';
 
-const Login = () => {
+const Login = (props) => {
     const host = "http://localhost:5000";   //Hard Coding just for now
     const navigate = useNavigate();     //for the purpose of redirecting to another page
 
@@ -34,9 +34,10 @@ const Login = () => {
             setUser({ authToken });
             localStorage.setItem('authToken', res.authToken);
             navigate("/");
+            props.showAlert("Logged In Successfully!", "success");
         }
         else {
-            alert("Invalid Credentials!");
+            props.showAlert("Invalid Credentials!", "danger");
         }
     }
 
