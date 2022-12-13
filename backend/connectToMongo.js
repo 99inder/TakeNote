@@ -1,10 +1,12 @@
 // const mongoose = require("mongoose");
 import mongoose from "mongoose";
+import * as dotenv from 'dotenv';
+dotenv.config();
 
-const mongoURI = 'mongodb://localhost:27017/notes-app';
+const mongoURI = process.env.DATABASE;
 
-const connectToMongo = async() => {
-    await mongoose.connect(mongoURI);
+const connectToMongo = async () => {
+    mongoose.connect(mongoURI);
     console.log("Connected to Mongo Successfully!")
 }
 

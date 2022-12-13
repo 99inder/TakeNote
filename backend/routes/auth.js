@@ -4,10 +4,12 @@ import User from "../models/User.js";                           //import for 'us
 import bcrypt from 'bcryptjs';                                  //import for password encryption
 import jwt from 'jsonwebtoken';                                 //import for json-web-token
 import fetchuser from "../middleware/fetchuser.js";             //middleware function that extracts the user id from the auth-token
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 const router = express.Router();
 
-const jwtKey = "mynameisInder";
+const jwtKey = process.env.SECRET_KEY;
 
 //ENDPOINT 1: POST: "/api/auth/create-user" (LOGIN NOT REQUIRED)    Creating a user and saving it's data to the database
 router.post('/create-user', [
