@@ -1,5 +1,4 @@
-const host = "http://localhost:5000";   //Hard Coding just for now
-// const authToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjM4YTUyMjkzNWE0NDRmYjY3NzAyZGZjIn0sImlhdCI6MTY3MDA1ODgxN30.PbtPQ6-FJGCPfkdyfKeJanrsAghVZxfNyBhC_tCzoWM";   //Hard Coding just for now
+const host = process.env.REACT_APP_BACKEND_HOST || "http://localhost:5000"; 
 
 export const setUser = (data) => {
     return {

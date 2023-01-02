@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { actionCreators } from '../redux';
 
 const Signup = (props) => {
-    const host = "http://localhost:5000";   //Hard Coding just for now
+    const host = process.env.REACT_APP_BACKEND_HOST || "http://localhost:5000";
 
     const navigate = useNavigate();     //for the purpose of redirecting to another page
 

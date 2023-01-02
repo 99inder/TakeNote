@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 
 
-const jwtKey = "mynameisInder";
+const jwtKey = process.env.SECRET_KEY;
 
 const fetchuser = (req, res, next) => {
 

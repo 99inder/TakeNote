@@ -32,7 +32,6 @@ router.post('/addnote', fetchuser, [
 
         return res.send(note);
     } catch (error) {
-        console.log(error.message);
         return res.status(500).send("Internal Server Error");
     }
 });
@@ -45,7 +44,6 @@ router.get('/fetchallnotes', fetchuser, async (req, res) => {
         notes.length ? res.json(notes) : res.status(404).send("No Notes found from this user");
         return;
     } catch (error) {
-        console.log(error.message);
         return res.status(500).send("Internal Server Error");
     }
 });
@@ -79,7 +77,6 @@ router.put('/updatenote/:id', fetchuser, async (req, res) => {
         return res.json("Note Updated");
 
     } catch (error) {
-        console.log(error.message);
         return res.status(500).send("Internal Server Error");
     }
 });
@@ -107,7 +104,6 @@ router.delete('/deletenote/:id', fetchuser, async (req, res) => {
         return res.send("Note Deleted");
 
     } catch (error) {
-        console.log(error.message);
         return res.status(500).send("Internal Server Error");
     }
 });

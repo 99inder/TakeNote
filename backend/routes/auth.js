@@ -50,14 +50,12 @@ router.post('/create-user', [
                 id: user.id
             }
         }
-        console.log(payload);
 
         //authentication token generation and sending to the user
         const authToken = jwt.sign(payload, jwtKey);
         return res.json({ success: true, authToken });
 
     } catch (error) {
-        console.log(error.message);
         return res.status(500).send("Internal Server Error");
     }
 
@@ -81,7 +79,6 @@ router.post('/login', [
 
     try {
         let user = await User.findOne({ email: email });
-        console.log(user);
 
         if (!user) {
             return res.status(400).json({ success: false, error: "Please try to login with correct credentials." });
@@ -89,7 +86,6 @@ router.post('/login', [
 
         //Compare the input login password with the password hash sotored in the database
         const passwordCompare = await bcrypt.compare(password, user.password);     //function returns the boolean and stores it in "verifyUser"
-        console.log(passwordCompare);
 
         //If password doesn't match, return error response
         if (!passwordCompare) {
@@ -103,14 +99,12 @@ router.post('/login', [
                 id: user.id
             }
         }
-        console.log(payload);
 
         //authentication token generation and sending it to the user
         const authToken = jwt.sign(payload, jwtKey);
         return res.json({ success: true, authToken });
 
     } catch (error) {
-        console.log(error.message);
         return res.status(500).send("Internal Server Error");
     }
 })
@@ -127,7 +121,6 @@ router.post('/getuser', fetchuser, async (req, res) => {
         return res.send(user);
 
     } catch (error) {
-        console.log(error.message);
         return res.status(500).send("Internal Server Error");
     }
 })
